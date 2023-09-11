@@ -29,6 +29,19 @@ const userController = {
     }
     
   },
+  //update user
+  updateUser: async (req, res) => {
+    try {
+      const users = await User.findOneAndUpdate(
+        {_id: req.params.userId},
+        { $set: req.body },
+        { runValidators: true, new: true }
+        );
+      res.status(200).json(users);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }
 
   // Implement next user-related route handlers here
 };
