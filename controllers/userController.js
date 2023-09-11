@@ -49,6 +49,44 @@ const userController = {
       res.status(500).json(error);
     }
   },
+  // Add friend to user
+  addFriend: async (req, res) => {
+    try {
+      // Assuming you want to add a friend by their userId
+      const user = await User.findOneAndUpdate(
+        { _id: req.params.userId },
+        { $push: { friends: req.params.friendId } },
+        { new: true }
+      );
+
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      res.status(200).json(user);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  },
+
+  // Remove friend from user (You can implement this similarly)
+  removeFriend: async (req, res) => {
+    try {
+      const user = await User.findOneAndUpdate(
+        { _id: req.params.userId },
+        { $pull: { friends: req.params.friendId } },
+        { new: true }
+      );
+
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      res.status(200).json(user);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  },
 
   // Implement next user-related route handlers here
 };
