@@ -1,0 +1,18 @@
+// thoughtController.js
+
+const { Thought } = require('../models'); // Import the Thought model
+
+const thoughtController = {
+  getAllThoughts: async (req, res) => {
+    try {
+      const thoughts = await Thought.find();
+      res.status(200).json(thoughts);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  },
+
+  // Implement next routes here
+};
+
+module.exports = thoughtController;
