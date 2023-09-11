@@ -43,12 +43,21 @@ const thoughtSchema = new mongoose.Schema({
     required: true,
   },
   reactions: [reactionSchema], // Reaction subdocument schema
+}, {
+  toJSON: { getters: true }, // Include virtuals in toJSON() output
 });
 
 // Create a virtual called reactionCount
 thoughtSchema.virtual("reactionCount").get(function () {
   return this.reactions.length;
-});
+},
+{
+  toJSON: {
+    virtuals: true,
+  },
+  id: false,
+}
+);
 
 const Thought = mongoose.model("Thought", thoughtSchema);
 
